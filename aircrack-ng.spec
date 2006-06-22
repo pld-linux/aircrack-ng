@@ -2,18 +2,18 @@
 # TODO:
 # - PLD it more
 # - Find more deps
-# - automake it for God's sake
+# - optflags
 #
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
+Summary(pl):	Pewny sniffer 802.11 (sieci bezprzewodowe) i ³amacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
 Version:	0.5
 Release:	1
 License:	GPL
 Group:		Applications/Networking
-Source0:	http://freshmeat.net/redir/aircrack-ng/63481/url_tgz/%{name}-%{version}.tar.gz
+Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
 # Source0-md5:	303daa6f1b030f8f9a2f00542051b96c
-URL:		http://www.aircrack-ng.org
-Requires:	glibc >= 2
+URL:		http://www.aircrack-ng.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,11 +26,12 @@ capture files (merge, convert, etc.).
 
 %description -l pl
 aircrack-ng jest zestawew narzêdzi do audytów sieci bezprzewodowych.
-Jest to ulepszona/odnowiona wersja aircracka. Sk³ada sie z airodump-ng
-(program przechwytywania pakietów 802.11), aireplay-ng (program do
-wstrzykiwania pakietów 802.11), aircrack (statyczne ³amanie WEP i
-WPA-PSK), airdecap-ng (odzyfrowywanie przechwyconych plików WEP/WPA),
-i parê narzêdzi do obs³ugi plików przechwytów (merge, convert, etc.).
+Jest to ulepszona/odnowiona wersja aircracka. Sk³ada sie z programów
+airodump-ng (do przechwytywania pakietów 802.11), aireplay-ng (do
+wstrzykiwania pakietów 802.11), aircrack (do statycznego ³amania WEP i
+WPA-PSK), airdecap-ng (do odszyfrowywania przechwyconych plików
+WEP/WPA) i paru narzêdzi do obs³ugi plików przechwytów (merge,
+convert, etc.).
 
 %prep
 %setup -q
@@ -40,8 +41,7 @@ i parê narzêdzi do obs³ugi plików przechwytów (merge, convert, etc.).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d 	$RPM_BUILD_ROOT%{_bindir} \
-		$RPM_BUILD_ROOT%{_mandir}/man1
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 for BINARY in \
  aircrack-ng \
@@ -52,8 +52,8 @@ for BINARY in \
  airmon-ng \
  ivstools
 do
- install -m 755 "$BINARY" $RPM_BUILD_ROOT%{_bindir}
- install -m 644 manpages/"$BINARY.1" $RPM_BUILD_ROOT%{_mandir}/man1
+	install -m 755 "$BINARY" $RPM_BUILD_ROOT%{_bindir}
+	install -m 644 manpages/"$BINARY.1" $RPM_BUILD_ROOT%{_mandir}/man1
 done
 
 %clean
@@ -69,10 +69,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/arpforge-ng
 %attr(755,root,root) %{_bindir}/airmon-ng
 %attr(755,root,root) %{_bindir}/ivstools
-%{_mandir}/man1/aircrack-ng.*
-%{_mandir}/man1/airdecap-ng.*
-%{_mandir}/man1/aireplay-ng.*
-%{_mandir}/man1/airodump-ng.*
-%{_mandir}/man1/arpforge-ng.*
-%{_mandir}/man1/airmon-ng.*
-%{_mandir}/man1/ivstools.*
+%{_mandir}/man1/aircrack-ng.1*
+%{_mandir}/man1/airdecap-ng.1*
+%{_mandir}/man1/aireplay-ng.1*
+%{_mandir}/man1/airodump-ng.1*
+%{_mandir}/man1/arpforge-ng.1*
+%{_mandir}/man1/airmon-ng.1*
+%{_mandir}/man1/ivstools.1*
