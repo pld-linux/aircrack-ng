@@ -7,12 +7,12 @@
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl):	Pewny sniffer 802.11 (sieci bezprzewodowe) i ³amacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
-Version:	0.6
+Version:	0.6.2
 Release:	1
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
-# Source0-md5:	6b85fe925c93c972f3d9f8170dce46c6
+# Source0-md5:	0b1a9fb6818822f933336efc9fff316b
 URL:		http://www.aircrack-ng.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,9 +48,11 @@ for BINARY in \
  airdecap-ng \
  aireplay-ng \
  airodump-ng \
- arpforge-ng \
  airmon-ng \
- ivstools
+ ivstools \
+ makeivs \
+ kstats \
+ packetforge-ng
 do
 	install -m 755 "$BINARY" $RPM_BUILD_ROOT%{_bindir}
 	install -m 644 manpages/"$BINARY.1" $RPM_BUILD_ROOT%{_mandir}/man1
@@ -65,14 +67,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/aircrack-ng
 %attr(755,root,root) %{_bindir}/airdecap-ng
 %attr(755,root,root) %{_bindir}/aireplay-ng
-%attr(755,root,root) %{_bindir}/airodump-ng
-%attr(755,root,root) %{_bindir}/arpforge-ng
 %attr(755,root,root) %{_bindir}/airmon-ng
+%attr(755,root,root) %{_bindir}/airodump-ng
 %attr(755,root,root) %{_bindir}/ivstools
+%attr(755,root,root) %{_bindir}/kstats
+%attr(755,root,root) %{_bindir}/makeivs
+%attr(755,root,root) %{_bindir}/packetforge-ng
 %{_mandir}/man1/aircrack-ng.1*
 %{_mandir}/man1/airdecap-ng.1*
 %{_mandir}/man1/aireplay-ng.1*
-%{_mandir}/man1/airodump-ng.1*
-%{_mandir}/man1/arpforge-ng.1*
 %{_mandir}/man1/airmon-ng.1*
+%{_mandir}/man1/airodump-ng.1*
 %{_mandir}/man1/ivstools.1*
+%{_mandir}/man1/kstats.1*
+%{_mandir}/man1/makeivs.1*
+%{_mandir}/man1/packetforge-ng.1*
