@@ -25,7 +25,7 @@ airdecap-ng (decrypts WEP/WPA capture files), and some tools to handle
 capture files (merge, convert, etc.).
 
 %description -l pl
-aircrack-ng jest zestawew narzêdzi do audytów sieci bezprzewodowych.
+aircrack-ng jest zestawem narzêdzi do audytów sieci bezprzewodowych.
 Jest to ulepszona/odnowiona wersja aircracka. Sk³ada sie z programów
 airodump-ng (do przechwytywania pakietów 802.11), aireplay-ng (do
 wstrzykiwania pakietów 802.11), aircrack (do statycznego ³amania WEP i
