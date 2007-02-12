@@ -5,7 +5,7 @@
 # - optflags
 #
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
-Summary(pl.UTF-8):   Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
+Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
 Version:	0.7
 Release:	1
