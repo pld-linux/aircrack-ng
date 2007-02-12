@@ -5,7 +5,7 @@
 # - optflags
 #
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
-Summary(pl):	Pewny sniffer 802.11 (sieci bezprzewodowe) i 砤macz kluczy WEP/WPA-PSK
+Summary(pl.UTF-8):   Pewny sniffer 802.11 (sieci bezprzewodowe) i 艂amacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
 Version:	0.7
 Release:	1
@@ -24,13 +24,13 @@ injection program), aircrack (static WEP and WPA-PSK cracking),
 airdecap-ng (decrypts WEP/WPA capture files), and some tools to handle
 capture files (merge, convert, etc.).
 
-%description -l pl
-aircrack-ng jest zestawem narz阣zi do audyt體 sieci bezprzewodowych.
-Jest to ulepszona/odnowiona wersja aircracka. Sk砤da sie z program體
-airodump-ng (do przechwytywania pakiet體 802.11), aireplay-ng (do
-wstrzykiwania pakiet體 802.11), aircrack (do statycznego 砤mania WEP i
-WPA-PSK), airdecap-ng (do odszyfrowywania przechwyconych plik體
-WEP/WPA) i paru narz阣zi do obs硊gi plik體 przechwyt體 (merge,
+%description -l pl.UTF-8
+aircrack-ng jest zestawem narz臋dzi do audyt贸w sieci bezprzewodowych.
+Jest to ulepszona/odnowiona wersja aircracka. Sk艂ada sie z program贸w
+airodump-ng (do przechwytywania pakiet贸w 802.11), aireplay-ng (do
+wstrzykiwania pakiet贸w 802.11), aircrack (do statycznego 艂amania WEP i
+WPA-PSK), airdecap-ng (do odszyfrowywania przechwyconych plik贸w
+WEP/WPA) i paru narz臋dzi do obs艂ugi plik贸w przechwyt贸w (merge,
 convert, etc.).
 
 %prep
