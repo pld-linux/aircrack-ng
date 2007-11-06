@@ -37,7 +37,9 @@ convert, etc.).
 %setup -q
 
 %build
-%{__make}
+%{__make} \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -54,8 +56,8 @@ for BINARY in \
  kstats \
  packetforge-ng
 do
-	install -m 755 "$BINARY" $RPM_BUILD_ROOT%{_bindir}
-	install -m 644 manpages/"$BINARY.1" $RPM_BUILD_ROOT%{_mandir}/man1
+	install "$BINARY" $RPM_BUILD_ROOT%{_bindir}
+	install manpages/"$BINARY.1" $RPM_BUILD_ROOT%{_mandir}/man1
 done
 
 %clean
@@ -63,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README test patches
+%doc AUTHORS ChangeLog README test patches
 %attr(755,root,root) %{_bindir}/aircrack-ng
 %attr(755,root,root) %{_bindir}/airdecap-ng
 %attr(755,root,root) %{_bindir}/aireplay-ng
