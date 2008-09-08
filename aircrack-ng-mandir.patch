@@ -1,0 +1,11 @@
+--- aircrack-ng-1.0-rc1/common.mak~	2008-06-09 21:55:09.000000000 +0200
++++ aircrack-ng-1.0-rc1/common.mak	2008-09-08 16:17:58.000000000 +0200
+@@ -58,7 +58,7 @@ CFLAGS          += $(OPTFLAGS) $(REVFLAG
+ prefix          = /usr/local
+ bindir          = $(prefix)/bin
+ sbindir         = $(prefix)/sbin
+-mandir          = $(prefix)/man/man1
++mandir          = $(prefix)/share/man/man1
+ datadir         = $(prefix)/share
+ docdir          = $(datadir)/doc/aircrack-ng
+ libdir		= $(prefix)/lib
