@@ -6,17 +6,15 @@
 # - cflags
 # - sbin/bin - change to bin?
 #
-
-%define		relc	rc4
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
 Version:	1.0
-Release:	0.%{relc}.1
+Release:	1
 License:	GPL
 Group:		Applications/Networking
-Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{relc}.tar.gz
-# Source0-md5:	7cb19c296f0b5ebaa4009f95c498a53f
+Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
+# Source0-md5:	dafbfaf944ca9d523fde4bae86f0c067
 Patch0:		%{name}-mandir.patch
 URL:		http://www.aircrack-ng.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -39,7 +37,7 @@ WEP/WPA) i paru narzędzi do obsługi plików przechwytów (merge,
 convert, etc.).
 
 %prep
-%setup -qn %{name}-%{version}-%{relc}
+%setup -q
 %patch0 -p1
 
 sed -i -e 's#-Werror -O3#$(PLDFLAGS)#g' common.mak
