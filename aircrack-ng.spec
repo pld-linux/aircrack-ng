@@ -17,6 +17,7 @@ Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
 # Source0-md5:	dafbfaf944ca9d523fde4bae86f0c067
 Patch0:		%{name}-mandir.patch
 URL:		http://www.aircrack-ng.org/
+BuildRequires:	openssl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
