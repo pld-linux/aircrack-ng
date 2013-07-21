@@ -45,7 +45,7 @@ convert, etc.).
 sed -i -e 's#-Werror -O3#$(PLDFLAGS)#g' common.mak
 
 %build
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
 	PLDFLAGS="%{rpmcppflags} %{rpmcflags}"
 
