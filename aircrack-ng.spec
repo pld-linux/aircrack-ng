@@ -19,7 +19,9 @@ Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{subver}.tar.gz
 # Source0-md5:	ebe9d537f06f4d6956213af09c4476da
 URL:		http://www.aircrack-ng.org/
+BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
