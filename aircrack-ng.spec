@@ -41,7 +41,7 @@ WEP/WPA) i paru narzędzi do obsługi plików przechwytów (merge,
 convert, etc.).
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{subver}
 %patch0 -p1
 
 sed -i -e 's#-Werror -O3#$(PLDFLAGS)#g' common.mak
