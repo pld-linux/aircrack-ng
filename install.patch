@@ -1,0 +1,54 @@
+--- aircrack-ng-1.2-rc2/scripts/airdrop-ng/Makefile.orig	2015-11-15 19:30:24.697474528 +0100
++++ aircrack-ng-1.2-rc2/scripts/airdrop-ng/Makefile	2015-11-15 19:30:45.967673386 +0100
+@@ -8,7 +8,7 @@ all:
+ 	@echo "Nothing to do. Run make install"
+ 
+ install: doc
+-	python setup.py install --prefix="$(prefix)" --record files.txt
++	python setup.py install --prefix="$(prefix)" --record files.txt --root=$(DESTDIR)
+ 
+ doc:
+ 	$(MAKE) -C doc install 
+--- aircrack-ng-1.2-rc2/scripts/airgraph-ng/Makefile.orig	2015-11-15 19:19:13.576610550 +0100
++++ aircrack-ng-1.2-rc2/scripts/airgraph-ng/Makefile	2015-11-15 19:40:45.567167477 +0100
+@@ -8,12 +8,12 @@ all:
+ 	@echo "Nothing to do. Run make install"
+ 
+ install: doc
+-	python setup.py install --prefix="$(prefix)" --record files.txt
++	python setup.py install --prefix="$(prefix)" --record files.txt --root=$(DESTDIR)
+ 
+ doc:
+ 	$(MAKE) -C man install 
+-	install -d $(prefix)$(docdir)
+-	install -d $(prefix)/share/airgraph-ng
++	install -d $(DESTDIR)$(docdir)
++	install -d $(DESTDIR)$(prefix)/share/airgraph-ng
+ 	install -m 644 $(DOCFILES) $(DESTDIR)$(docdir)
+ 
+ uninstall: clean
+--- aircrack-ng-1.2-rc2/scripts/airoscript-ng/Makefile.orig	2015-11-15 20:01:54.558201732 +0100
++++ aircrack-ng-1.2-rc2/scripts/airoscript-ng/Makefile	2015-11-15 20:22:37.877751547 +0100
+@@ -8,8 +8,8 @@ INSTALL = install -c
+ INSTALLDATA = install -c -m 644
+ INSTALLBIN = install -c -m 755
+ 
+-data=$(prefix)/share
+-bindir=$(prefix)/sbin/
++data=$(DESTDIR)$(prefix)/share
++bindir=$(DESTDIR)$(prefix)/sbin/
+ picdir=$(data)/pixmaps/
+ appdir=$(data)/applications/
+ locale=$(data)/locale
+@@ -75,9 +75,9 @@ install-desktop:
+ 	@xdg-desktop-menu install $(appdir)/airoscript-ng_gtk.desktop
+ 
+ generate-locale:
+-	@for i in $(srcdir)/locale/* ; do \
++	for i in $(srcdir)/locale/* ; do \
+ 		if [ -d $$i ] && [ $$i != "." ] && [ $$i != ".." ]; then \
+-			make -s -C $$i &> /dev/null ; \
++			make -s -C $$i localedir=$(locale); \
+ 		fi ; \
+ 	done
+ 
