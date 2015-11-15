@@ -7,6 +7,12 @@
 # - sbin/bin - change to bin?
 # - package airdrop-ng and airgraph-ng
 #
+# Conditional build:
+%bcond_without	sqlite			# build without sqlite support
+%bcond_without	pcre			# build without pcre support
+%bcond_without	experimental
+%bcond_without	ext_scripts
+#
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
@@ -22,6 +28,8 @@ URL:		http://www.aircrack-ng.org/
 BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
+%{?with_pcre:BuildRequires:	pcre-devel}
+%{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,6 +56,10 @@ sed -i -e 's#-Werror -O3#$(PLDFLAGS)#g' common.mak
 
 %build
 %{__make} -j1 \
+	%{?with_experimental: experimental=true} \
+	%{?with_ext_scripts: ext_scripts=true} \
+	%{?with_pcre: pcre=true} \
+	%{?with_sqlite: sqlite=true} \
 	CC="%{__cc}" \
 	PLDFLAGS="%{rpmcppflags} %{rpmcflags}"
 
@@ -56,6 +68,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 %{__make} install \
+	%{?with_experimental: experimental=true} \
+	%{?with_ext_scripts: ext_scripts=true} \
+	%{?with_pcre: pcre=true} \
+	%{?with_sqlite: sqlite=true} \
         prefix=%{_prefix} \
         DESTDIR=$RPM_BUILD_ROOT
 
@@ -68,6 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/aircrack-ng
 %attr(755,root,root) %{_bindir}/airdecap-ng
 %attr(755,root,root) %{_bindir}/airdecloak-ng
+%{?with_sqlite:%attr(755,root,root) %{_bindir}/airolib-ng}
 %attr(755,root,root) %{_bindir}/ivstools
 %attr(755,root,root) %{_bindir}/kstats
 %attr(755,root,root) %{_bindir}/makeivs-ng
@@ -83,6 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/aircrack-ng.1*
 %{_mandir}/man1/airdecap-ng.1*
 %{_mandir}/man1/airdecloak-ng.1*
+%{?with_sqlite:%{_mandir}/man1/airolib-ng.1*}
 %{_mandir}/man1/besside-ng-crawler.1*
 %{_mandir}/man1/ivstools.1*
 %{_mandir}/man1/kstats.1*
@@ -97,3 +115,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/airserv-ng.8*
 %{_mandir}/man8/airtun-ng.8*
 %{_mandir}/man8/besside-ng.8*
+
+%if %{with experimental}
+%attr(755,root,root) %{_bindir}/buddy-ng
+%attr(755,root,root) %{_sbindir}/besside-ng
+%attr(755,root,root) %{_sbindir}/easside-ng
+%attr(755,root,root) %{_sbindir}/tkiptun-ng
+%attr(755,root,root) %{_sbindir}/wesside-ng
+%{_mandir}/man1/buddy-ng.1*
+%{_mandir}/man8/easside-ng.8*
+%{_mandir}/man8/tkiptun-ng.8*
+%{_mandir}/man8/wesside-ng.8*
+%endif
