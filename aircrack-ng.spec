@@ -18,7 +18,6 @@ License:	GPL
 Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{subver}.tar.gz
 # Source0-md5:	ebe9d537f06f4d6956213af09c4476da
-Patch0:		%{name}-mandir.patch
 URL:		http://www.aircrack-ng.org/
 BuildRequires:	openssl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,7 +41,6 @@ convert, etc.).
 
 %prep
 %setup -q -n %{name}-%{version}-%{subver}
-%patch0 -p1
 
 sed -i -e 's#-Werror -O3#$(PLDFLAGS)#g' common.mak
 
