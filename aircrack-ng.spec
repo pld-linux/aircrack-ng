@@ -1,7 +1,6 @@
 #
 # TODO:
 # - PLD it more
-# - Find more deps
 # - sbin/bin - change to bin?
 # - package airdrop-ng and airgraph-ng
 #
