@@ -29,6 +29,7 @@ Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{subver}.tar.gz
 URL:		http://www.aircrack-ng.org/
 Patch0:		install.patch
 Patch1:		pldflags.patch
+Patch2:		install_besside_manual.patch
 BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
 %{?with_pcre:BuildRequires:	pcre-devel}
@@ -58,6 +59,7 @@ convert, etc.).
 %setup -q -n %{name}-%{version}-%{subver}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} -j1 \
@@ -119,7 +121,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/airodump-ng.8*
 %{_mandir}/man8/airserv-ng.8*
 %{_mandir}/man8/airtun-ng.8*
-%{_mandir}/man8/besside-ng.8*
 
 %if %{with experimental}
 %attr(755,root,root) %{_bindir}/buddy-ng
@@ -128,6 +129,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/tkiptun-ng
 %attr(755,root,root) %{_sbindir}/wesside-ng
 %{_mandir}/man1/buddy-ng.1*
+%{_mandir}/man8/besside-ng.8*
 %{_mandir}/man8/easside-ng.8*
 %{_mandir}/man8/tkiptun-ng.8*
 %{_mandir}/man8/wesside-ng.8*
