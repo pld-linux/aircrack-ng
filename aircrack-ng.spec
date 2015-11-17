@@ -2,8 +2,6 @@
 # TODO:
 # - PLD it more
 # - Find more deps
-# - optflags
-# - cflags
 # - sbin/bin - change to bin?
 # - package airdrop-ng and airgraph-ng
 #
@@ -26,6 +24,7 @@ Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{subver}.tar.gz
 # Source0-md5:	ebe9d537f06f4d6956213af09c4476da
 URL:		http://www.aircrack-ng.org/
 Patch0:		install.patch
+Patch1:		pldflags.patch
 BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
@@ -53,8 +52,7 @@ convert, etc.).
 %prep
 %setup -q -n %{name}-%{version}-%{subver}
 %patch0 -p1
-
-sed -i -e 's#-Werror -O3#$(PLDFLAGS)#g' common.mak
+%patch1 -p1
 
 %build
 %{__make} -j1 \
