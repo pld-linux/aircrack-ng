@@ -11,7 +11,7 @@
 %bcond_without	sqlite			# build without sqlite support
 %bcond_without	pcre			# build without pcre support
 %bcond_without	experimental
-%bcond_without	ext_scripts
+%bcond_with	ext_scripts		# build with extra scripts (NFY)
 #
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
