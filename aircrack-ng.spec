@@ -14,13 +14,13 @@
 %bcond_without	pcre			# build without pcre support
 %bcond_without	experimental
 %bcond_with	ext_scripts		# build with extra scripts (NFY)
-#
+
+%define	subver	rc2
+%define	rel	0.1
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
 Version:	1.2
-%define	subver	rc2
-%define	rel	0.1
 Release:	%{subver}.%{rel}
 License:	GPL
 Group:		Applications/Networking
@@ -31,9 +31,10 @@ Patch0:		install.patch
 Patch1:		pldflags.patch
 BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
-BuildRequires:	pkgconfig
 %{?with_pcre:BuildRequires:	pcre-devel}
+BuildRequires:	pkgconfig
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
