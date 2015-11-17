@@ -2,7 +2,12 @@
 # TODO:
 # - PLD it more
 # - sbin/bin - change to bin?
-# - package airdrop-ng and airgraph-ng
+# - finish ext_scripts bcond:
+# -- check python related BR and R
+# -- fix packaging python releated stuff
+# -- create subpackage for airoscript
+# -- fix directory for airoscript*.conf files
+# -- fix installation of airoscript desktop files
 #
 # Conditional build:
 %bcond_without	sqlite			# build without sqlite support
