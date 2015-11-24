@@ -16,7 +16,7 @@
 %bcond_with	ext_scripts		# build with extra scripts (NFY)
 
 %define	subver	rc2
-%define	rel	0.1
+%define	rel	0.2
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
@@ -30,12 +30,17 @@ URL:		http://www.aircrack-ng.org/
 Patch0:		install.patch
 Patch1:		pldflags.patch
 Patch2:		install_besside_manual.patch
+Patch3:		use_standard_sleep.patch
 BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
 %{?with_pcre:BuildRequires:	pcre-devel}
 BuildRequires:	pkgconfig
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	zlib-devel
+Requires:	ethtool
+Requires:	grep
+Requires:	iw
+Requires:	usbutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,6 +65,7 @@ convert, etc.).
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} -j1 \
