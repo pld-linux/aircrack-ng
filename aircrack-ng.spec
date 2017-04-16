@@ -15,8 +15,8 @@
 %bcond_without	experimental
 %bcond_with	ext_scripts		# build with extra scripts (NFY)
 
-%define	subver	rc2
-%define	rel	0.2
+%define	subver	rc4
+%define	rel	1
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
@@ -25,12 +25,11 @@ Release:	%{subver}.%{rel}
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	ebe9d537f06f4d6956213af09c4476da
+# Source0-md5:	3bbc7d5035a98ec01e78774d05c3fcce
 URL:		http://www.aircrack-ng.org/
 Patch0:		install.patch
 Patch1:		pldflags.patch
 Patch2:		install_besside_manual.patch
-Patch3:		use_standard_sleep.patch
 BuildRequires:	libnl-devel
 BuildRequires:	openssl-devel
 %{?with_pcre:BuildRequires:	pcre-devel}
@@ -65,7 +64,6 @@ convert, etc.).
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__make} -j1 \
@@ -74,7 +72,7 @@ convert, etc.).
 	%{?with_pcre: pcre=true} \
 	%{?with_sqlite: sqlite=true} \
 	CC="%{__cc}" \
-	PLDFLAGS="%{rpmcppflags} %{rpmcflags}"
+	PLDFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -129,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/airtun-ng.8*
 
 %if %{with experimental}
+%attr(755,root,root) %{_bindir}/besside-ng-crawler
 %attr(755,root,root) %{_bindir}/buddy-ng
 %attr(755,root,root) %{_sbindir}/besside-ng
 %attr(755,root,root) %{_sbindir}/easside-ng

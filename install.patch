@@ -11,7 +11,7 @@
  	$(MAKE) -C doc install 
 --- aircrack-ng-1.2-rc2/scripts/airgraph-ng/Makefile.orig	2015-11-15 19:19:13.576610550 +0100
 +++ aircrack-ng-1.2-rc2/scripts/airgraph-ng/Makefile	2015-11-15 19:40:45.567167477 +0100
-@@ -8,12 +8,12 @@ all:
+@@ -8,13 +8,12 @@ all:
  	@echo "Nothing to do. Run make install"
  
  install: doc
@@ -22,7 +22,7 @@
  	$(MAKE) -C man install 
 -	install -d $(prefix)$(docdir)
 -	install -d $(prefix)/share/airgraph-ng
-+	install -d $(DESTDIR)$(docdir)
+ 	install -d $(DESTDIR)$(docdir)
 +	install -d $(DESTDIR)$(prefix)/share/airgraph-ng
  	install -m 644 $(DOCFILES) $(DESTDIR)$(docdir)
  
