@@ -16,7 +16,7 @@
 %bcond_with	ext_scripts		# build with extra scripts (NFY)
 
 %define	subver	rc4
-%define	rel	1
+%define	rel	2
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
