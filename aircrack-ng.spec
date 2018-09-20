@@ -11,28 +11,25 @@
 #
 # Conditional build:
 %bcond_without	sqlite			# build without sqlite support
-%bcond_without	pcre			# build without pcre support
 %bcond_without	experimental
 %bcond_with	ext_scripts		# build with extra scripts (NFY)
 
-%define	subver	rc4
-%define	rel	2
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
-Version:	1.2
-Release:	0.%{subver}.%{rel}
+Version:	1.3
+Release:	1
 License:	GPL
 Group:		Applications/Networking
-Source0:	http://download.aircrack-ng.org/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	3bbc7d5035a98ec01e78774d05c3fcce
+Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
+# Source0-md5:	c7c5b076dee0c25ee580b0f56f455623
 URL:		http://www.aircrack-ng.org/
-Patch0:		install.patch
-Patch1:		pldflags.patch
-Patch2:		install_besside_manual.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libnl-devel
+BuildRequires:	libtool
 BuildRequires:	openssl-devel
-%{?with_pcre:BuildRequires:	pcre-devel}
+BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	zlib-devel
@@ -60,34 +57,34 @@ WEP/WPA) i paru narzędzi do obsługi plików przechwytów (merge,
 convert, etc.).
 
 %prep
-%setup -q -n %{name}-%{version}-%{subver}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -q
 
 %build
-%{__make} -j1 \
-	%{?with_experimental: experimental=true} \
-	%{?with_ext_scripts: ext_scripts=true} \
-	%{?with_pcre: pcre=true} \
-	%{?with_sqlite: sqlite=true} \
-	CC="%{__cc}" \
-	PLDFLAGS="%{rpmcflags}"
+%{__libtoolize}
+%{__aclocal} -I build/m4/stubs -I build/m4
+%{__autoconf}
+%{__automake}
+%configure \
+	ETHTOOL=/sbin/ethtool \
+	--with-openssl \
+	--with%{!?with_experimental:out}-experimental \
+	--with%{!?with_ext_scripts:out}-ext-scripts \
+	--with-%{!?with_sqlite:out}-sqlite3 \
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 %{__make} install \
-	%{?with_experimental: experimental=true} \
-	%{?with_ext_scripts: ext_scripts=true} \
-	%{?with_pcre: pcre=true} \
-	%{?with_sqlite: sqlite=true} \
-        prefix=%{_prefix} \
-        DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -106,8 +103,20 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/airmon-ng
 %attr(755,root,root) %{_sbindir}/airodump-ng
 %attr(755,root,root) %{_sbindir}/airodump-ng-oui-update
+%attr(755,root,root) %{_sbindir}/airventriloquist-ng
 %attr(755,root,root) %{_sbindir}/airserv-ng
 %attr(755,root,root) %{_sbindir}/airtun-ng
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto-x86-avx.so.0
+%attr(755,root,root) %{_libdir}/libaircrack-crypto-x86-avx.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto-x86-avx2.so.0
+%attr(755,root,root) %{_libdir}/libaircrack-crypto-x86-avx2.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto-x86-sse2.so.0
+%attr(755,root,root) %{_libdir}/libaircrack-crypto-x86-sse2.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto.so.0
+%attr(755,root,root) %{_libdir}/libaircrack-crypto.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-osdep.so.0
+%attr(755,root,root) %{_libdir}/libaircrack-osdep.so.*.*
+
 %{_mandir}/man1/aircrack-ng.1*
 %{_mandir}/man1/airdecap-ng.1*
 %{_mandir}/man1/airdecloak-ng.1*
@@ -120,6 +129,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wpaclean.1*
 %{_mandir}/man8/airbase-ng.8*
 %{_mandir}/man8/aireplay-ng.8*
+%{_mandir}/man8/airventriloquist-ng.8*
 %{_mandir}/man8/airmon-ng.8*
 %{_mandir}/man8/airodump-ng-oui-update.8*
 %{_mandir}/man8/airodump-ng.8*
