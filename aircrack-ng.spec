@@ -17,26 +17,35 @@
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
-Version:	1.3
+Version:	1.6
 Release:	1
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
-# Source0-md5:	c7c5b076dee0c25ee580b0f56f455623
+# Source0-md5:	22ddc85549b51ed0da0931d01ef215e5
 URL:		http://www.aircrack-ng.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	cmocka-devel
+BuildRequires:	ethtool
+BuildRequires:	hwloc-devel
 BuildRequires:	libnl-devel
 BuildRequires:	libtool
+BuildRequires:	libgcrypt-devel >= 1.2.0
+BuildRequires:	libpcap-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python3-graphviz
+BuildRequires:	python3-setuptools
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	zlib-devel
 Requires:	ethtool
 Requires:	grep
 Requires:	iw
 Requires:	usbutils
+Requires:	python3-graphviz
+Requires:	wireless-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -56,17 +65,36 @@ WPA-PSK), airdecap-ng (do odszyfrowywania przechwyconych plików
 WEP/WPA) i paru narzędzi do obsługi plików przechwytów (merge,
 convert, etc.).
 
+%package devel
+Summary:        Development files for %{name}
+Summary(pl.UTF-8):	Pliki deweloperskie dla %{name}
+Group:          Development/Libraries/C and C++
+Requires:       %{name} = %{version}
+
+%description devel
+Development files for %{name}.
+
+%description -l pl.UTF-8 devel
+Pliki deweloperskie dla %{name}
+
 %prep
 %setup -q
+# Force python3 interpreter
+sed -i -e 's|#!%{_bindir}/env python|#!%{_bindir}/python3|g' scripts/versuck-ng/versuck-ng
 
 %build
+# GCC LTO objects must be "fat" to avoid assembly errors
+export CFLAGS="-ffat-lto-objects -fcommon"
+
 %{__libtoolize}
 %{__aclocal} -I build/m4/stubs -I build/m4
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure \
 	ETHTOOL=/sbin/ethtool \
-	--with-openssl \
+	--with-gcrypt \
+	--enable-libnl \
 	--with%{!?with_experimental:out}-experimental \
 	--with%{!?with_ext_scripts:out}-ext-scripts \
 	--with-%{!?with_sqlite:out}-sqlite3 \
@@ -79,6 +107,8 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+find $RPM_BUILD_ROOT -type f \( -name "*.la" -o -name "*.a" \) -delete -print
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -106,16 +136,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/airventriloquist-ng
 %attr(755,root,root) %{_sbindir}/airserv-ng
 %attr(755,root,root) %{_sbindir}/airtun-ng
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto-x86-avx.so.0
-%attr(755,root,root) %{_libdir}/libaircrack-crypto-x86-avx.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto-x86-avx2.so.0
-%attr(755,root,root) %{_libdir}/libaircrack-crypto-x86-avx2.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto-x86-sse2.so.0
-%attr(755,root,root) %{_libdir}/libaircrack-crypto-x86-sse2.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-crypto.so.0
-%attr(755,root,root) %{_libdir}/libaircrack-crypto.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-osdep.so.0
-%attr(755,root,root) %{_libdir}/libaircrack-osdep.so.*.*
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-1.6.0.so
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx-1.6.0.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx2-1.6.0.so
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa-x86-avx2.so
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa-x86-avx.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-sse2-1.6.0.so
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa-x86-sse2.so
+%attr(755,root,root) %{_libdir}/libaircrack-osdep-1.6.0.so
+%attr(755,root,root) %ghost %{_libdir}/libaircrack-osdep.so
 
 %{_mandir}/man1/aircrack-ng.1*
 %{_mandir}/man1/airdecap-ng.1*
@@ -149,3 +179,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/tkiptun-ng.8*
 %{_mandir}/man8/wesside-ng.8*
 %endif
+
+%files devel
+%{_includedir}/%{name}
