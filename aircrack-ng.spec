@@ -13,26 +13,27 @@
 %bcond_without	sqlite			# build without sqlite support
 %bcond_without	experimental
 %bcond_with	ext_scripts		# build with extra scripts (NFY)
+%define		lib_ver		1.7.0
 
 Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
-Version:	1.6
+Version:	1.7
 Release:	1
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
-# Source0-md5:	22ddc85549b51ed0da0931d01ef215e5
+# Source0-md5:	a918ea7146f91d8c799fb770c38f4bec
 URL:		http://www.aircrack-ng.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cmocka-devel
 BuildRequires:	ethtool
 BuildRequires:	hwloc-devel
-BuildRequires:	libnl-devel
-BuildRequires:	libtool
 BuildRequires:	libgcrypt-devel >= 1.2.0
+BuildRequires:	libnl-devel
 BuildRequires:	libpcap-devel
+BuildRequires:	libtool
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
@@ -43,8 +44,8 @@ BuildRequires:	zlib-devel
 Requires:	ethtool
 Requires:	grep
 Requires:	iw
-Requires:	usbutils
 Requires:	python3-graphviz
+Requires:	usbutils
 Requires:	wireless-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -66,15 +67,15 @@ WEP/WPA) i paru narzędzi do obsługi plików przechwytów (merge,
 convert, etc.).
 
 %package devel
-Summary:        Development files for %{name}
+Summary:	Development files for %{name}
 Summary(pl.UTF-8):	Pliki deweloperskie dla %{name}
-Group:          Development/Libraries/C and C++
-Requires:       %{name} = %{version}
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
 
 %description devel
 Development files for %{name}.
 
-%description -l pl.UTF-8 devel
+%description devel -l pl.UTF-8
 Pliki deweloperskie dla %{name}
 
 %prep
@@ -136,16 +137,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/airventriloquist-ng
 %attr(755,root,root) %{_sbindir}/airserv-ng
 %attr(755,root,root) %{_sbindir}/airtun-ng
-%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-1.6.0.so
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa.so
-%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx-1.6.0.so
-%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx2-1.6.0.so
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa-x86-avx2.so
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa-x86-avx.so
-%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-sse2-1.6.0.so
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-ce-wpa-x86-sse2.so
-%attr(755,root,root) %{_libdir}/libaircrack-osdep-1.6.0.so
-%attr(755,root,root) %ghost %{_libdir}/libaircrack-osdep.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-%{lib_ver}.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx-%{lib_ver}.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx2-%{lib_ver}.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx2.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-sse2-%{lib_ver}.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-sse2.so
+%attr(755,root,root) %{_libdir}/libaircrack-osdep-%{lib_ver}.so
+%attr(755,root,root) %{_libdir}/libaircrack-osdep.so
 
 %{_mandir}/man1/aircrack-ng.1*
 %{_mandir}/man1/airdecap-ng.1*
@@ -181,4 +182,5 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %files devel
+%defattr(644,root,root,755)
 %{_includedir}/%{name}
