@@ -19,7 +19,7 @@ Summary:	Reliable 802.11 (wireless) sniffer and WEP/WPA-PSK key cracker
 Summary(pl.UTF-8):	Pewny sniffer 802.11 (sieci bezprzewodowe) i łamacz kluczy WEP/WPA-PSK
 Name:		aircrack-ng
 Version:	1.7
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
@@ -37,14 +37,11 @@ BuildRequires:	libtool
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python3-graphviz
-BuildRequires:	python3-setuptools
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	zlib-devel
 Requires:	ethtool
 Requires:	grep
 Requires:	iw
-Requires:	python3-graphviz
 Requires:	usbutils
 Requires:	wireless-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -93,6 +90,7 @@ export CFLAGS="-ffat-lto-objects -fcommon"
 %{__autoheader}
 %{__automake}
 %configure \
+	PYTHON=%{__python3} \
 	ETHTOOL=/sbin/ethtool \
 	--with-gcrypt \
 	--enable-libnl \
