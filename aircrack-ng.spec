@@ -36,6 +36,7 @@ BuildRequires:	libtool
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3
+BuildRequires:	rpmbuild(macros) >= 2.007
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	zlib-devel
 Requires:	awk
@@ -144,12 +145,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/airtun-ng
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-%{lib_ver}.so
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa.so
+%ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx-%{lib_ver}.so
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx2-%{lib_ver}.so
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx2.so
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-avx.so
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-sse2-%{lib_ver}.so
 %attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-x86-sse2.so
+%endif
+%ifarch %{arm_with_neon}
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-arm-neon-%{lib_ver}.so
+%attr(755,root,root) %{_libdir}/libaircrack-ce-wpa-arm-neon.so
+%endif
 %attr(755,root,root) %{_libdir}/libaircrack-osdep-%{lib_ver}.so
 %attr(755,root,root) %{_libdir}/libaircrack-osdep.so
 
