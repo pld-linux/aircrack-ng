@@ -85,7 +85,7 @@ Pliki deweloperskie dla %{name}
 %prep
 %setup -q
 # Force python3 interpreter
-sed -i -e 's|#!%{_bindir}/env python|#!%{_bindir}/python3|g' scripts/versuck-ng/versuck-ng
+grep -r -l '#!/usr/bin/env python' scripts | xargs sed -i -e 's|#!/usr/bin/env python|#!%{__python3}|g'
 
 %build
 # GCC LTO objects must be "fat" to avoid assembly errors
