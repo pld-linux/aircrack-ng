@@ -104,6 +104,7 @@ export CFLAGS="%{rpmcflags} -ffat-lto-objects -fcommon"
 	--enable-libnl \
 	--with%{!?with_experimental:out}-experimental \
 	--with%{!?with_ext_scripts:out}-ext-scripts \
+	--without-opt \
 	--with-%{!?with_sqlite:out}-sqlite3 \
 
 %{__make}
