@@ -22,7 +22,7 @@ Version:	1.7
 Release:	2
 License:	GPL
 Group:		Applications/Networking
-Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
+Source0:	https://download.aircrack-ng.org/%{name}-%{version}.tar.gz
 # Source0-md5:	a918ea7146f91d8c799fb770c38f4bec
 URL:		http://www.aircrack-ng.org/
 BuildRequires:	autoconf >= 2.52
