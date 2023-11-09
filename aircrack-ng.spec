@@ -92,6 +92,7 @@ export CFLAGS="-ffat-lto-objects -fcommon"
 %configure \
 	PYTHON=%{__python3} \
 	ETHTOOL=/sbin/ethtool \
+	--disable-silent-rules \
 	--with-gcrypt \
 	--enable-libnl \
 	--with%{!?with_experimental:out}-experimental \
