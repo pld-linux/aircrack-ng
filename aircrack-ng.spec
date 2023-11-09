@@ -88,9 +88,6 @@ Pliki deweloperskie dla %{name}
 grep -r -l '#!/usr/bin/env python' scripts | xargs sed -i -e 's|#!/usr/bin/env python|#!%{__python3}|g'
 
 %build
-# GCC LTO objects must be "fat" to avoid assembly errors
-export CFLAGS="%{rpmcflags} -ffat-lto-objects"
-
 %{__libtoolize}
 %{__aclocal} -I build/m4/stubs -I build/m4
 %{__autoconf}
