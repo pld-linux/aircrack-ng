@@ -25,25 +25,31 @@ Group:		Applications/Networking
 Source0:	http://download.aircrack-ng.org/%{name}-%{version}.tar.gz
 # Source0-md5:	a918ea7146f91d8c799fb770c38f4bec
 URL:		http://www.aircrack-ng.org/
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	cmocka-devel
-BuildRequires:	ethtool
+BuildRequires:	autoconf >= 2.52
+BuildRequires:	automake >= 1:1.14
 BuildRequires:	hwloc-devel
 BuildRequires:	libgcrypt-devel >= 1.2.0
-BuildRequires:	libnl-devel
+BuildRequires:	libnl-devel >= 1:3.2
 BuildRequires:	libpcap-devel
+BuildRequires:	libstdc++-devel >= 6:4.8.1
 BuildRequires:	libtool
-BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python3
 %{?with_sqlite:BuildRequires:	sqlite3-devel}
 BuildRequires:	zlib-devel
+Requires:	awk
+Requires:	coreutils
 Requires:	ethtool
 Requires:	grep
+Requires:	iproute2
 Requires:	iw
+Requires:	libnl >= 1:3.2
+Requires:	pciutils
 Requires:	usbutils
-Requires:	wireless-tools
+Requires:	util-linux
+Requires:	virtual(module-tools)
+Suggests:	wireless-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
