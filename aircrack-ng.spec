@@ -102,7 +102,7 @@ grep -r -l '#!/usr/bin/env python' scripts | xargs sed -i -e 's|#!/usr/bin/env p
 	--with%{!?with_experimental:out}-experimental \
 	--with%{!?with_ext_scripts:out}-ext-scripts \
 	--without-opt \
-	--with-%{!?with_sqlite:out}-sqlite3 \
+	--with%{!?with_sqlite:out}-sqlite3
 
 %{__make}
 
