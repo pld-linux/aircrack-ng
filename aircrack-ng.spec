@@ -89,7 +89,7 @@ grep -r -l '#!/usr/bin/env python' scripts | xargs sed -i -e 's|#!/usr/bin/env p
 
 %build
 # GCC LTO objects must be "fat" to avoid assembly errors
-export CFLAGS="%{rpmcflags} -ffat-lto-objects -fcommon"
+export CFLAGS="%{rpmcflags} -ffat-lto-objects"
 
 %{__libtoolize}
 %{__aclocal} -I build/m4/stubs -I build/m4
